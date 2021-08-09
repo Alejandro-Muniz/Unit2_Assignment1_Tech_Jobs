@@ -1,0 +1,89 @@
+﻿<div class="container body-content">
+
+    <h1>@ViewBag.title</h1>
+
+    <form action="/search/results" method="post">
+        <h2>Search by:</h2>
+
+        <p>
+            @foreach (var column in ViewBag.columns)
+            {
+                <span>
+                    <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked="@column.Key == 'all'" />
+                    <label for="@column.Key">@column.Value</label>
+                </span>
+            }
+
+        </p>
+
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+        </p>
+
+        <input type="submit" value="Search" />
+
+    </form>
+
+    <hr />
+
+    @{
+//****************************************************************
+//TODO #4: Loop over the search results to display all job fields.
+//****************************************************************
+
+        <!--
+            ...continued from Controller/SearchController.cs
+            3)  Complete the Search Functionality. Display Search Results:
+                Once you have your Results action method passing information
+                to the view, you need to display the data.
+                1.  In Search/Index, create a loop to display each job passed
+                    in from the controller.
+                2.  Put the job results into a table, similar to what you did
+                    for the List/Jobs view.
+                Tip:
+                    You can reuse the code you just wrote in List/Jobs.cshtml
+                    by copying and pasting. For the fragment to work properly
+                    in both files, the ViewBag properties must use the same name.
+                Done?
+                    Perform a Sanity Check: return to Program.cs
+        -->
+    }
+    @if (ViewBag.jobs != null)
+    {
+        @foreach (Job action in ViewBag.jobs)
+        {
+            <table class="job-listing">
+                <tr>
+                    <td>
+                        id: @action.Id
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        name: @action.Name
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        employer: @action.Employer.Value
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        location: @action.Location.Value
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        positionType: @action.PositionType.Value
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        competency: @action.CoreCompetency.Value
+                    </td>
+                </tr>
+            </table>
+        }
+    }
